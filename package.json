@@ -1,0 +1,27 @@
+{
+  "name": "v-track",
+  "version": "1.0.0",
+  "description": "Trying to get student info from Academicscc",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperThinking/v-track.git"
+  },
+  "author": "Vishal Dhawan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuperThinking/v-track/issues"
+  },
+  "homepage": "https://github.com/SuperThinking/v-track#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "fetch": "^1.1.0"
+  }
+}

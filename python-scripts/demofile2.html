@@ -1,0 +1,377 @@
+
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="PRAGMA" content="NO-CACHE" />
+<link href="style2.css" rel="stylesheet" type="text/css" />
+<script language="javascript">
+
+function Check() 
+{
+	d = document.attn_report;
+		
+	if((d.from_date.value.length&lt;1) || (d.from_date.value.charAt(0) == " "))
+	{
+		alert("Please choose the 'FROM DATE'...");
+		d.from_date.select();
+		d.from_date.focus();
+    	return false;
+	}
+	if((d.to_date.value.length&lt;1) || (d.to_date.value.charAt(0) == " "))
+	{
+		alert("Please choose the 'TO DATE'...");
+		d.to_date.select();
+		d.to_date.focus();
+		return false;
+	}
+
+	var sm = d.sem.value;
+	var fd = d.from_date.value;
+	var td = d.to_date.value;
+		
+	self.location = "attn_report.asp?sem="+ sm +"&amp;fmdt="+ fd +"&amp;todt="+ td;	
+	return true;
+}
+
+function call_cont()
+{
+	window.open("https://vtop.vit.ac.in/Academic_Regulations.htm#_Toc331065862");
+}
+
+</script>
+<script type="text/javascript">
+
+spe=500;
+na=document.all.tags("blink");
+swi=1;
+bringBackBlinky();
+
+function bringBackBlinky()
+{
+	if (swi == 1)
+	{
+		sho="visible";
+		swi=0;
+	}
+	else
+	{
+		sho="hidden";
+		swi=1;
+	}
+
+	for(i=0;i&lt;na.length;i++)
+	{
+		na[i].style.visibility=sho;
+	}
+
+	setTimeout("bringBackBlinky()", spe);
+}
+
+</script>
+<script type="text/javascript" src="datetimepicker_css.js"></script>
+</head>
+<table width="79%" border="0" cellpadding="0" cellspacing="0" height="350">
+<tr>
+<td valign="top" width="1%" bgcolor="#FFFFFF">
+		&nbsp;
+	</td>
+<td valign="top" width="78%" bgcolor="#FFFFFF">
+<br />
+<center><b><u>ATTENDANCE REPORT  -  Win Semester 2018~19</u></b></center>
+<br />
+<form name="attn_report">
+<table width="60%" border="1" cellpadding="3" cellspacing="0" style="border-collapse: collapse" bordercolor="#616D7E" height="150">
+<tr>
+<td align="center" colspan="2" bgcolor="#616D7E" height="30">
+<font color="#FFFFFF"><b>Attendance updated as on 4/17/2019 11:41:43 PM</b></font>
+</td>
+</tr>
+<!--
+		&lt;tr&gt;
+			&lt;td align="right"&gt;&lt;b&gt;CGPA :&lt;/b&gt;&lt;/td&gt;
+			&lt;td align="left"&gt;  8.34&lt;/td&gt;
+		&lt;/tr&gt;
+		-->
+<tr>
+<td align="right"><b>From :</b></td>
+<td align="left">
+<input name="from_date" id="demo32" class="textbox" value="01-Apr-2019" maxlength="15" size="15" readonly="readonly" tabindex="1" />
+<a href="javascript:NewCssCal('demo32','ddmmmyyyy','arrow')">
+<img border="0" src="images/cal.gif" width="16" height="16" alt="Pick a date" /></a>
+</td>
+</tr>
+<tr>
+<td align="right"><b>To :</b></td>
+<td align="left">
+<input name="to_date" id="demo33" class="textbox" value="17-Apr-2019" maxlength="15" size="15" readonly="readonly" tabindex="1" />
+<a href="javascript:NewCssCal('demo33','ddmmmyyyy','arrow')">
+<img border="0" src="images/cal.gif" width="16" height="16" alt="Pick a date" /></a>
+</td>
+</tr>
+<tr>
+<td align="center" width="98%" colspan="2" bgcolor="#616D7E" height="34">
+<input type="hidden" name="sem" value="WS" />
+<input type="button" name="rptbut" class="submit3" value="View Report" tabindex="3" onclick="return Check();" />
+</td>
+</tr>
+</table>
+</form>
+<br />
+<table cellpadding="2" cellspacing="0" border="1" width="60%" style="border-collapse: collapse;" bordercolor="black">
+<tr bgcolor="#616D7E" align="center" height="25">
+<td colspan="4"><font color="white"><b>ATTENDANCE DETAILS</b></font></td>
+</tr>
+<tr bgcolor="#5A768D" align="center" height="25">
+<td width="10%"><font color="white">Program</font></td>
+<td width="20%"><font color="white">Period</font></td>
+<td width="15%"><font color="white">From</font></td>
+<td width="15%"><font color="white">To</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">ALL</font></td>
+<td><font color="black">CAT-I Marks</font></td>
+<td><font color="black">03-DEC-2018</font></td>
+<td><font color="black">25-JAN-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">ALL</font></td>
+<td><font color="black">CAT-II Marks</font></td>
+<td><font color="black">03-DEC-2018</font></td>
+<td><font color="black">01-MAR-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">ALL</font></td>
+<td><font color="black">Final Assessment Test</font></td>
+<td><font color="black">03-DEC-2018</font></td>
+<td><font color="black">10-APR-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">LAW</font></td>
+<td><font color="black">Final Assessment Test</font></td>
+<td><font color="black">03-DEC-2018</font></td>
+<td><font color="black">10-APR-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">MBA</font></td>
+<td><font color="black">Mid Term</font></td>
+<td><font color="black">07-JAN-2019</font></td>
+<td><font color="black">13-FEB-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">MBA</font></td>
+<td><font color="black">Final Assessment Test</font></td>
+<td><font color="black">07-JAN-2019</font></td>
+<td><font color="black">10-APR-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">WEI</font></td>
+<td><font color="black">CAT-I Marks</font></td>
+<td><font color="black">15-DEC-2018</font></td>
+<td><font color="black">20-JAN-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">WEI</font></td>
+<td><font color="black">CAT-II Marks</font></td>
+<td><font color="black">15-DEC-2018</font></td>
+<td><font color="black">09-MAR-2019</font></td>
+</tr>
+<tr align="center" bgcolor="#E6F2FF" height="25">
+<td><font color="black">WEI</font></td>
+<td><font color="black">Final Assessment Test</font></td>
+<td><font color="black">15-DEC-2018</font></td>
+<td><font color="black">17-APR-2019</font></td>
+</tr>
+</table>
+<br />
+<table cellspacing="1" cellpadding="1" border="0">
+<tr><td><font color="red"><b>* Note :</b></font></td></tr>
+<tr><td>1. If the attendance is incorrect or not displayed, please contact your course teacher.</td></tr>
+<tr><td>2. '<font color="red">-</font>' indicates that attendance is not yet posted.</td></tr>
+<tr><td>3. Status with blinking '<font color="red">Debarred</font>' indicates that attendance is less than 75%.</td></tr>
+</table>
+<br />
+<table width="900" cellspacing="0" cellpadding="4" border="1" bordercolor="#000000" style="border-collapse: collapse">
+<tr bgcolor="#5A768D" align="center">
+<td width="50"><font color="#FFFFFF"><b>Sl.No.</b></font></td>
+<td width="90"><font color="#FFFFFF"><b>Course Code</b></font></td>
+<td><font color="#FFFFFF"><b>Course Title</b></font></td>
+<td width="100"><font color="#FFFFFF"><b>Course Type</b></font></td>
+<td width="100"><font color="#FFFFFF"><b>Slot</b></font></td>
+<td width="90"><font color="#FFFFFF"><b>Reg. Date</b></font></td>
+<td width="70"><font color="#FFFFFF"><b>Attended Classes</b></font></td>
+<td width="70"><font color="#FFFFFF"><b>Total Classes</b></font></td>
+<td width="80"><font color="#FFFFFF"><b>Attendance Percentage</b></font></td>
+<td width="80"><font color="#FFFFFF"><b>Status</b></font></td>
+<td width="80"><font color="#FFFFFF"><b>View</b></font></td>
+</tr>
+<tr bgcolor="#E6F2FF" onmouseout="this.bgColor='#E6F2FF'" onmouseover="this.bgColor='#CCFFCC'">
+<td align="center">1</td>
+<td align="center">CSE3021</td>
+<td>Social and Information Networks</td>
+<td>Embedded Theory</td>
+<td>D2+TD2</td>
+<td align="center">15/11/2018 13:10:30</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">60</td>
+<td align="center"><font color="red"><blink>Debarred</blink></font></td>
+<form method="POST" action="attn_report_details.asp">
+</form><td align="center" valign="center">
+<input type="hidden" name="semcode" value="WINSEM2018-19" />
+<input type="hidden" name="classnbr" value="1229" />
+<input type="hidden" name="from_date" value="01-Apr-2019" />
+<input type="hidden" name="to_date" value="17-Apr-2019" />
+<input type="hidden" name="crscd" value="CSE3021" />
+<input type="hidden" name="crstp" value="ETH" />
+<input class="submit" type="submit" value="Details" />
+</td>
+
+</tr>
+<tr bgcolor="#E6F2FF" onmouseout="this.bgColor='#E6F2FF'" onmouseover="this.bgColor='#CCFFCC'">
+<td align="center">2</td>
+<td align="center">CSE3999</td>
+<td>Technical  Answers  for Real World Problems (TARP)</td>
+<td>Embedded Theory</td>
+<td>TDD1</td>
+<td align="center">15/11/2018 13:09:46</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">100</td>
+<td align="center">-</td>
+<form method="POST" action="attn_report_details.asp">
+</form><td align="center" valign="center">
+<input type="hidden" name="semcode" value="WINSEM2018-19" />
+<input type="hidden" name="classnbr" value="2217" />
+<input type="hidden" name="from_date" value="01-Apr-2019" />
+<input type="hidden" name="to_date" value="17-Apr-2019" />
+<input type="hidden" name="crscd" value="CSE3999" />
+<input type="hidden" name="crstp" value="ETH" />
+<input class="submit" type="submit" value="Details" />
+</td>
+
+</tr>
+<tr bgcolor="#E6F2FF" onmouseout="this.bgColor='#E6F2FF'" onmouseover="this.bgColor='#CCFFCC'">
+<td align="center">3</td>
+<td align="center">CSE4003</td>
+<td>Cyber Security</td>
+<td>Embedded Theory</td>
+<td>E2+TE2</td>
+<td align="center">04/12/2018 23:44:00</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">75</td>
+<td align="center">-</td>
+<form method="POST" action="attn_report_details.asp">
+</form><td align="center" valign="center">
+<input type="hidden" name="semcode" value="WINSEM2018-19" />
+<input type="hidden" name="classnbr" value="1246" />
+<input type="hidden" name="from_date" value="01-Apr-2019" />
+<input type="hidden" name="to_date" value="17-Apr-2019" />
+<input type="hidden" name="crscd" value="CSE4003" />
+<input type="hidden" name="crstp" value="ETH" />
+<input class="submit" type="submit" value="Details" />
+</td>
+
+</tr>
+<tr bgcolor="#E6F2FF" onmouseout="this.bgColor='#E6F2FF'" onmouseover="this.bgColor='#CCFFCC'">
+<td align="center">4</td>
+<td align="center">CSE4019</td>
+<td>Image  Processing</td>
+<td>Embedded Theory</td>
+<td>B2+TB2</td>
+<td align="center">04/12/2018 23:37:38</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">80</td>
+<td align="center">-</td>
+<form method="POST" action="attn_report_details.asp">
+</form><td align="center" valign="center">
+<input type="hidden" name="semcode" value="WINSEM2018-19" />
+<input type="hidden" name="classnbr" value="1186" />
+<input type="hidden" name="from_date" value="01-Apr-2019" />
+<input type="hidden" name="to_date" value="17-Apr-2019" />
+<input type="hidden" name="crscd" value="CSE4019" />
+<input type="hidden" name="crstp" value="ETH" />
+<input class="submit" type="submit" value="Details" />
+</td>
+
+</tr>
+<tr bgcolor="#E6F2FF" onmouseout="this.bgColor='#E6F2FF'" onmouseover="this.bgColor='#CCFFCC'">
+<td align="center">5</td>
+<td align="center">CSE4022</td>
+<td>Natural Language Processing</td>
+<td>Embedded Theory</td>
+<td>A2+TA2</td>
+<td align="center">15/11/2018 13:10:08</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">60</td>
+<td align="center"><font color="red"><blink>Debarred</blink></font></td>
+<form method="POST" action="attn_report_details.asp">
+</form><td align="center" valign="center">
+<input type="hidden" name="semcode" value="WINSEM2018-19" />
+<input type="hidden" name="classnbr" value="1220" />
+<input type="hidden" name="from_date" value="01-Apr-2019" />
+<input type="hidden" name="to_date" value="17-Apr-2019" />
+<input type="hidden" name="crscd" value="CSE4022" />
+<input type="hidden" name="crstp" value="ETH" />
+<input class="submit" type="submit" value="Details" />
+</td>
+
+</tr>
+<tr bgcolor="#E6F2FF" onmouseout="this.bgColor='#E6F2FF'" onmouseover="this.bgColor='#CCFFCC'">
+<td align="center">6</td>
+<td align="center">MGT1036</td>
+<td>Principles of Marketing</td>
+<td>Embedded Theory</td>
+<td>G2+TG2</td>
+<td align="center">15/11/2018 13:10:50</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">100</td>
+<td align="center">-</td>
+<form method="POST" action="attn_report_details.asp">
+</form><td align="center" valign="center">
+<input type="hidden" name="semcode" value="WINSEM2018-19" />
+<input type="hidden" name="classnbr" value="2058" />
+<input type="hidden" name="from_date" value="01-Apr-2019" />
+<input type="hidden" name="to_date" value="17-Apr-2019" />
+<input type="hidden" name="crscd" value="MGT1036" />
+<input type="hidden" name="crstp" value="ETH" />
+<input class="submit" type="submit" value="Details" />
+</td>
+
+</tr>
+<tr bgcolor="#E6F2FF" onmouseout="this.bgColor='#E6F2FF'" onmouseover="this.bgColor='#CCFFCC'">
+<td align="center">7</td>
+<td align="center">STS3004</td>
+<td>Data Structures and Algorithms</td>
+<td>Soft Skill</td>
+<td>F2+TF2</td>
+<td align="center">15/11/2018 12:49:08</td>
+<td align="center">5</td>
+<td align="center">5</td>
+<td align="center">100</td>
+<td align="center">-</td>
+<form method="POST" action="attn_report_details.asp">
+</form><td align="center" valign="center">
+<input type="hidden" name="semcode" value="WINSEM2018-19" />
+<input type="hidden" name="classnbr" value="1050" />
+<input type="hidden" name="from_date" value="01-Apr-2019" />
+<input type="hidden" name="to_date" value="17-Apr-2019" />
+<input type="hidden" name="crscd" value="STS3004" />
+<input type="hidden" name="crstp" value="SS" />
+<input class="submit" type="submit" value="Details" />
+</td>
+
+</tr>
+</table><br />
+<br /><br />
+<center>
+<input type="button" class="submit3" value="View Attandance Rules" name="vwregltn" tabindex="4" onclick="call_cont()" /></center>
+<br /><br />
+</td>
+</tr>
+</table>
+</html>
