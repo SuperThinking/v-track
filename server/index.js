@@ -1,20 +1,48 @@
-const express = require('express');
-var axios = require('axios');
+var express = require('express');
 var app = express();
-var cors = require('cors')
-var bodyParser = require('body-parser')
-const PORT = 5000;
-var fetch = require('fetch');
+var login = require('./app');
+var Browser = require('zombie');
+var unirest = require('unirest');
+const fs = require('fs');
+const jsdom = require("jsdom")
+const { JSDOM } = jsdom;
+var request = require('request')
+var cheerio = require('cheerio');
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+const marksURL = 'https://academicscc.vit.ac.in/student/marks1.asp?sem=WS' 
+const attendanceURL = 'https://academicscc.vit.ac.in/student/attn_report.asp?sem=WS&fmdt=01-Apr-2019&todt=17-Apr-2019'
 
-app.use(cors())
+app.get('/', (req, res, next) => {
 
-app.get('/', urlencodedParser, (req, res, next)=>{
-    res.send("ASD");
-    fetch.FetchStream("https://academicscc.vit.ac.in/student/marks1.asp?sem=WS", {"credentials":"include","headers":{"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3","accept-language":"en-US,en-IN;q=0.9,en;q=0.8","upgrade-insecure-requests":"1"},"referrer":"https://academicscc.vit.ac.in/student/stud_menu.asp","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"cors"})
+    login.studentAuth("16BCE1111", "#23Oct1970#", (name, regno, cookieJ, err) => {
+        request.get(marksURL, { uri: marksURL, jar: cookieJ }, function (err, httpResponse, html) {
+            if (err) {
+                console.log(err)
+            }
+            request.get(attendanceURL, { uri: attendanceURL, jar: cookieJ }, function (err, httpResponse, html) {
+                if (err) {
+                    console.log(err)
+                }
+                let $ = cheerio.load(html);
+                let k = $('tbody').last().children().first()
+                while(k.text().trim())
+                {
+                    console.log(k.text().trim())
+                    k = k.next()
+                }
+                res.send(html)
+            });
+        });
+        // unirest.get('https://academicscc.vit.ac.in/student/marks1.asp?sem=WS')
+        // // .headers({'Referer':"https://academicscc.vit.ac.in/student/stud_menu.asp"})
+        // .jar(cookieJ)
+        // .then(resp=>{
+        //     res.send(resp.body)
+        // })
+    })
+    // res.send('Hey');
 })
 
-app.listen(PORT, ()=>{
-    console.log(`Server started on port ${PORT}`);
-});
+app.listen(5000, () => {
+    console.log("Server is up on port " + 5000);
+})
