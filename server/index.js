@@ -24,10 +24,17 @@ app.get('/', (req, res, next) => {
                     console.log(err)
                 }
                 let $ = cheerio.load(html);
-                let k = $('tbody').last().children().first()
+                let k = $('tbody').last().children().first().next()
                 while(k.text().trim())
                 {
-                    console.log(k.text().trim())
+                    let l = k.find('td').first()
+                    let tempArr = []
+                    while(l.text().trim())
+                    {
+                        tempArr.push(l.text().trim())
+                        l=l.next()
+                    }
+                    console.log(tempArr[1], tempArr[2], tempArr[4], tempArr[6], tempArr[7])
                     k = k.next()
                 }
                 res.send(html)
