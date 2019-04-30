@@ -3,12 +3,17 @@ var app = express();
 var login = require('./app');
 var attendance_module = require('./modules/attendance_module').getTotalAttendanceDetail
 
-const marksURL = 'https://academicscc.vit.ac.in/student/marks1.asp?sem=WS' 
-const attendanceURL = 'https://academicscc.vit.ac.in/student/attn_report.asp?sem=WS&fmdt=01-Apr-2019&todt=17-Apr-2019'
-
 app.get('/', (req, res, next) => {
 
     login.studentAuth("16BCE1111", "#23Oct1970#", (name, regno, cookieJ, err) => {
+        let sem = "WS"
+        let fromDate = "01-Jan-2015"
+        let toDate = "01-Jan-2100"
+        if (new Date().getMonth() > 5 && new Date().getMonth() < 11)
+            sem = "FS"
+        const marksURL = `https://academicscc.vit.ac.in/student/marks1.asp?sem=${sem}`
+        const attendanceURL = `https://academicscc.vit.ac.in/student/attn_report.asp?sem=${sem}&fmdt=${fromDate}&todt=${toDate}`
+
         attendance_module(cookieJ, marksURL, attendanceURL, res);
         // res.send('ASDASD');
     })
