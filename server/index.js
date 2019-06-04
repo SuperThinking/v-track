@@ -5,8 +5,10 @@ var attendance_module = require("./modules/attendance_module")
   .getTotalAttendanceDetail;
 var uniqueAttendance = require("./modules/attendance_module").uniqueAttendance;
 var bodyParser = require("body-parser");
+const serverless = require("serverless-http");
 
 const port = process.env.PORT || 5000;
+const Router = express.Router();
 
 app.use(bodyParser.json());
 app.use(
@@ -15,13 +17,13 @@ app.use(
   })
 );
 
-app.get("/", (req, res, next) => {
+Router.get("/", (req, res, next) => {
   res.send(
     "<h2>Server for V-Track. <br/> Kindly contact <i>superthinkingdev@gmail.com (Vishal Dhawan)</i> for more info.</h2>"
   );
 });
 
-app.post("/", (req, res, next) => {
+Router.post("/", (req, res, next) => {
   let id = req.body.id,
     pass = req.body.pass;
   login.studentAuth(id, pass, (name, regno, cookieJ, err) => {
@@ -42,6 +44,6 @@ app.post("/", (req, res, next) => {
   });
 });
 
-app.listen(port, () => {
-  console.log("Server is up on port " + 5000);
-});
+app.use("/.netlify/functions/index", Router);
+
+module.exports.handler = serverless(app);
