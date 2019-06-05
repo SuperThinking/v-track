@@ -4,8 +4,8 @@
   "description": "Trying to get student info from Academicscc",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/netlify-lambda serve server",
-    "build": "./node_modules/.bin/netlify-lambda build server",
+    "start": "./node_modules/.bin/netlify-lambda serve server -t 20",
+    "build": "./node_modules/.bin/netlify-lambda build server -t 20",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

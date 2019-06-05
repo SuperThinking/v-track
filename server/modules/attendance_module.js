@@ -1,14 +1,7 @@
 var request = require("request");
 var cheerio = require("cheerio");
 
-getTotalAttendanceDetail = (
-  cookieJ,
-  marksURL,
-  attendanceURL,
-  ttURL,
-  res,
-  name
-) => {
+getTotalUserInfo = (cookieJ, marksURL, attendanceURL, ttURL, res, name) => {
   request.get(marksURL, { uri: marksURL, jar: cookieJ }, function(
     err,
     httpResponse,
@@ -53,7 +46,6 @@ getTotalAttendanceDetail = (
           tempArr.push(l.text().trim());
           l = l.next();
         }
-        // console.log(tempArr[1], tempArr[2], tempArr[4], tempArr[6], tempArr[7], tempArr[8])
         subObj[classnbr] = [
           tempArr[1],
           tempArr[2],
@@ -75,61 +67,106 @@ getTotalAttendanceDetail = (
         if (err) {
           console.log(err);
         }
-        request.get(ttURL, { uri: ttURL, jar: cookieJ }, function(
-          err,
-          httpResponse,
-          html
-        ) {
-          if (err) {
-            console.log(err);
-          }
-          let $ = cheerio.load(html);
-          $ = cheerio.load(
-            $("form")
-              .first()
-              .html()
-          );
-          var k = $("tbody")
-            .children()
+        let $ = cheerio.load(html);
+        $ = cheerio.load(
+          $("form")
             .first()
-            .next();
-          while (k.text().trim()) {
-            let l = k.find("td").first();
-            let cn = l.text().trim();
-            if (!cn) {
-              l = l.next().next();
-              cn = l.text().trim();
-            }
-            if (cn in subObj) {
-              subObj[cn].push(
-                l
-                  .next()
-                  .next()
-                  .next()
-                  .next()
-                  .next()
-                  .next()
-                  .next()
-                  .next()
-                  .text()
-                  .trim()
-              );
-            }
-            k = k.next();
+            .html()
+        );
+        var k = $("tbody")
+          .children()
+          .first()
+          .next();
+        while (k.text().trim()) {
+          let l = k.find("td").first();
+          let cn = l.text().trim();
+          if (!cn) {
+            l = l.next().next();
+            cn = l.text().trim();
           }
-          for (i in subObj) {
-            AttObj.subjects.push(subObj[i]);
+          if (cn in subObj) {
+            subObj[cn].push(
+              l
+                .next()
+                .next()
+                .next()
+                .next()
+                .next()
+                .next()
+                .next()
+                .next()
+                .text()
+                .trim()
+            );
           }
-          console.log(AttObj);
-          //Changed from html->AttObj
-          res.send(AttObj);
-        });
+          k = k.next();
+        }
+        for (i in subObj) {
+          AttObj.subjects.push(subObj[i]);
+        }
+        console.log(AttObj);
+        //Changed from html->AttObj
+        res.send(AttObj);
       });
     });
   });
 };
 
-getRoomNumber = (ttURL, cookieJ, h) => {};
+updatedAttendance = (cookieJ, marksURL, attendanceURL, res, name) => {
+  request.get(marksURL, { uri: marksURL, jar: cookieJ }, function(
+    err,
+    httpResponse,
+    html
+  ) {
+    if (err) {
+      res.send({ code: "150", message: "VIT Student Login Blocked" });
+      console.log(err);
+    } else {
+      request.get(attendanceURL, { uri: attendanceURL, jar: cookieJ }, function(
+        err,
+        httpResponse,
+        html
+      ) {
+        if (err) {
+          console.log(err);
+          res.send({ code: "150", message: "VIT Student Login Blocked" });
+        } else {
+          try {
+            let $ = cheerio.load(html);
+            let k = $("tbody")
+              .last()
+              .children()
+              .first()
+              .next();
+            var subObj = {};
+            while (k.text().trim()) {
+              let l = k.find("td").first();
+              let classnbr = k
+                .find("td")
+                .last()
+                .find("input")
+                .next()
+                .attr("value");
+              let tempArr = [];
+              while (l.text().trim()) {
+                tempArr.push(l.text().trim());
+                l = l.next();
+              }
+              subObj[classnbr] = [tempArr[6], tempArr[7], tempArr[8]];
+              k = k.next();
+            }
+            res.send(subObj);
+          } catch (err) {
+            res.send({
+              code: "150",
+              message: "Unable to fetch data. Contact DEV."
+            });
+          }
+        }
+      });
+    }
+  });
+};
 
 //vvvvvvvvvvv NOT WORKING vvvvvvvvvvv//
 getUniqueAttendanceDetail = (
@@ -191,6 +228,7 @@ getUniqueAttendanceDetail = (
 };
 
 module.exports = {
-  getTotalAttendanceDetail: getTotalAttendanceDetail,
+  getTotalUserInfo: getTotalUserInfo,
+  updatedAttendance: updatedAttendance,
   uniqueAttendance: getUniqueAttendanceDetail
 };
