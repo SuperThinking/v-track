@@ -24,8 +24,8 @@ getTotalUserInfo = (cookieJ, marksURL, attendanceURL, ttURL, res, name) => {
         .children()
         .first()
         .next();
-      var AttObj = { name: name.trim(), subjects: [] };
-      var subObj = {};
+      let AttObj = { name: name.trim(), subjects: [] };
+      let subObj = {};
       while (k.text().trim()) {
         let l = k.find("td").first();
         let classnbr = k
@@ -73,7 +73,7 @@ getTotalUserInfo = (cookieJ, marksURL, attendanceURL, ttURL, res, name) => {
             .first()
             .html()
         );
-        var k = $("tbody")
+        let k = $("tbody")
           .children()
           .first()
           .next();
@@ -138,7 +138,7 @@ updatedAttendance = (cookieJ, marksURL, attendanceURL, res, name) => {
               .children()
               .first()
               .next();
-            var subObj = {};
+            let subObj = {};
             while (k.text().trim()) {
               let l = k.find("td").first();
               let classnbr = k
