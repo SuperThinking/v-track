@@ -32,7 +32,7 @@ Router.post("/login", (req, res, next) => {
       let sem = "WS";
       let fromDate = "01-Jan-2015";
       let toDate = "01-Jan-2100";
-      if (new Date().getMonth() >= 5 && new Date().getMonth() < 11) sem = "FS";
+      if (new Date().getMonth() > 5 && new Date().getMonth() < 11) sem = "FS";
       const marksURL = `https://academicscc.vit.ac.in/student/marks1.asp?sem=${sem}`;
       const attendanceURL = `https://academicscc.vit.ac.in/student/attn_report.asp?sem=${sem}&fmdt=${fromDate}&todt=${toDate}`;
       const uattendanceURL =
@@ -56,9 +56,6 @@ Router.post("/attendance", (req, res, next) => {
       if (new Date().getMonth() > 5 && new Date().getMonth() < 11) sem = "FS";
       const marksURL = `https://academicscc.vit.ac.in/student/marks1.asp?sem=${sem}`;
       const attendanceURL = `https://academicscc.vit.ac.in/student/attn_report.asp?sem=${sem}&fmdt=${fromDate}&todt=${toDate}`;
-      const uattendanceURL =
-        "https://academicscc.vit.ac.in/student/attn_report_details.asp";
-      const ttURL = `https://academicscc.vit.ac.in/student/course_regular.asp?sem=${sem}`;
       updatedAttendance(cookieJ, marksURL, attendanceURL, res, name);
     } else {
       res.send({ Error: err });

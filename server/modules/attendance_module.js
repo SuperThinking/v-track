@@ -157,6 +157,7 @@ updatedAttendance = (cookieJ, marksURL, attendanceURL, res, name) => {
             }
             res.send(subObj);
           } catch (err) {
+            console.log("Updated Attendance Function Error");
             res.send({
               code: "150",
               message: "Unable to fetch data. Contact DEV."
