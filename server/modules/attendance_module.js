@@ -1,5 +1,6 @@
 var request = require("request");
 var cheerio = require("cheerio");
+var unirest = require("unirest");
 
 getTotalUserInfo = (cookieJ, marksURL, attendanceURL, ttURL, res, name) => {
   request.get(marksURL, { uri: marksURL, jar: cookieJ }, function(
@@ -169,6 +170,58 @@ updatedAttendance = (cookieJ, marksURL, attendanceURL, res, name) => {
   });
 };
 
+getDetailedInfo = (cookieJ, marksURL, data, res) => {
+  console.log("Found Me!");
+  const sub_url =
+    "https://academicscc.vit.ac.in/student/attn_report_details.asp";
+  var formD = {
+    semcode: "FALLSEM2019-20",
+    classnbr: "2375",
+    from_date: "10-JUL-2019",
+    to_date: "21-AUG-2019",
+    crscd: "CSE3013",
+    crstp: "ETH"
+  };
+  var headers = {
+    Host: "academicscc.vit.ac.in",
+    Origin: "https://academicscc.vit.ac.in",
+    Referer:
+      "https://academicscc.vit.ac.in/student/attn_report.asp?sem=FS&fmdt=07-Aug-2017&todt=21-Aug-2050",
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Sec-Fetch-Mode": "nested-navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1"
+  };
+  formD = JSON.stringify(formD);
+
+  request.get(marksURL, { uri: marksURL, jar: cookieJ }, function(
+    err,
+    httpResponse,
+    html
+  ) {
+    if (err) {
+      res.send({ code: "150", message: "VIT Student Login Blocked" });
+      console.log(err);
+    } else {
+      unirest
+        .post(sub_url)
+        .headers(headers)
+        .jar(cookieJ)
+        .send(`semcode=FALLSEM2019-20`)
+        .send(`classnbr=2375`)
+        .send(`from_date=10-JUL-2019`)
+        .send(`to_date=21-AUG-2019`)
+        .send(`crscd=CSE3013`)
+        .send(`crstp=ETH`)
+        .end(response => {
+          // console.log(response);
+          res.send(response.body);
+        });
+    }
+  });
+};
+
 //vvvvvvvvvvv NOT WORKING vvvvvvvvvvv//
 getUniqueAttendanceDetail = (
   cookieJ,
@@ -231,5 +284,6 @@ getUniqueAttendanceDetail = (
 module.exports = {
   getTotalUserInfo: getTotalUserInfo,
   updatedAttendance: updatedAttendance,
-  uniqueAttendance: getUniqueAttendanceDetail
+  uniqueAttendance: getUniqueAttendanceDetail,
+  getDetailedInfo: getDetailedInfo
 };
