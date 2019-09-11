@@ -174,26 +174,16 @@ getDetailedInfo = (cookieJ, marksURL, data, res) => {
   console.log("Found Me!");
   const sub_url =
     "https://academicscc.vit.ac.in/student/attn_report_details.asp";
-  var formD = {
-    semcode: "FALLSEM2019-20",
-    classnbr: "2375",
-    from_date: "10-JUL-2019",
-    to_date: "21-AUG-2019",
-    crscd: "CSE3013",
-    crstp: "ETH"
-  };
   var headers = {
     Host: "academicscc.vit.ac.in",
     Origin: "https://academicscc.vit.ac.in",
-    Referer:
-      "https://academicscc.vit.ac.in/student/attn_report.asp?sem=FS&fmdt=07-Aug-2017&todt=21-Aug-2050",
+    Referer: marksURL,
     "Content-Type": "application/x-www-form-urlencoded",
     "Sec-Fetch-Mode": "nested-navigate",
     "Sec-Fetch-Site": "same-origin",
     "Sec-Fetch-User": "?1",
     "Upgrade-Insecure-Requests": "1"
   };
-  formD = JSON.stringify(formD);
 
   request.get(marksURL, { uri: marksURL, jar: cookieJ }, function(
     err,
@@ -208,15 +198,48 @@ getDetailedInfo = (cookieJ, marksURL, data, res) => {
         .post(sub_url)
         .headers(headers)
         .jar(cookieJ)
-        .send(`semcode=FALLSEM2019-20`)
-        .send(`classnbr=2375`)
-        .send(`from_date=10-JUL-2019`)
-        .send(`to_date=21-AUG-2019`)
-        .send(`crscd=CSE3013`)
-        .send(`crstp=ETH`)
+        .send(data[0])
+        .send(data[1])
+        .send(data[2])
+        .send(data[3])
+        .send(data[4])
+        .send(data[5])
         .end(response => {
-          // console.log(response);
-          res.send(response.body);
+          let html = response.body;
+          let data = { details: [], status: 200 };
+          try {
+            let $ = cheerio.load(html);
+            let k = $("tbody")
+              .last()
+              .children()
+              .first()
+              .next()
+              .next();
+            while (k.text().trim()) {
+              data.details.push({
+                date: k
+                  .find("td")
+                  .first()
+                  .next()
+                  .text(),
+                status: k
+                  .find("td")
+                  .first()
+                  .next()
+                  .next()
+                  .next()
+                  .text()
+              });
+              k = k.next();
+            }
+            if (data.details.length == 0)
+              throw "Error (Detailed Attendance) : Details not found";
+            res.send(data);
+          } catch (err) {
+            data.status = 404;
+            console.log(err);
+            res.send(data);
+          }
         });
     }
   });

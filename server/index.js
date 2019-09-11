@@ -4,6 +4,7 @@ var login = require("./app");
 var fullInfo = require("./modules/attendance_module").getTotalUserInfo;
 var updatedAttendance = require("./modules/attendance_module")
   .updatedAttendance;
+var detailedAttendance = require("./modules/attendance_module").getDetailedInfo;
 var uniqueAttendance = require("./modules/attendance_module").uniqueAttendance;
 var bodyParser = require("body-parser");
 const serverless = require("serverless-http");
@@ -22,6 +23,39 @@ Router.get("/", (req, res, next) => {
   res.send(
     "<h2>Server for V-Track. <br/> Kindly contact <i>superthinkingdev@gmail.com (Vishal Dhawan)</i> for more info.</h2>"
   );
+});
+
+Router.post("/detailedAttendance", (req, res, next) => {
+  let id = req.body.id,
+    pass = req.body.pass,
+    cc = req.body.cc,
+    cn = req.body.cn,
+    ct = req.body.ct;
+  login.studentAuth(id, pass, (name, regno, cookieJ, err) => {
+    if (!err) {
+      let sem = "WS";
+      let fromDate = "01-Jan-2015";
+      let toDate = "01-Jan-2100";
+      if (new Date().getMonth() > 5 && new Date().getMonth() < 11) sem = "FS";
+      const marksURL = `https://academicscc.vit.ac.in/student/attn_report.asp?sem=${sem}&fmdt=${fromDate}&todt=${toDate}`;
+      let formData = [];
+      let FullSem =
+        "FALLSEM" +
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getFullYear() + 1).toString().substr(2);
+      formData.push(`semcode=${FullSem}`);
+      formData.push(`classnbr=${cn}`);
+      formData.push(`from_date=${fromDate}`);
+      formData.push(`to_date=${toDate}`);
+      formData.push(`crscd=${cc}`);
+      formData.push(`crstp=${ct}`);
+      console.log(formData);
+      detailedAttendance(cookieJ, marksURL, formData, res);
+    } else {
+      res.send({ Error: err });
+    }
+  });
 });
 
 Router.post("/login", (req, res, next) => {
