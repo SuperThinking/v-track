@@ -21,7 +21,7 @@ app.use(
 
 Router.get("/", (req, res, next) => {
   res.send(
-    "<h2>Server for V-Track. <br/> Kindly contact <i>superthinkingdev@gmail.com (Vishal Dhawan)</i> for more info.</h2>"
+    "<h2>Server for V-Track. <br/> Kindly contact <i>superthinkingdev@gmail.com (Vishal Dhawan)</i> for more info.</h2><br/><br/><br/><hr/>Last Updated : 11/09/2019<hr/>"
   );
 });
 
